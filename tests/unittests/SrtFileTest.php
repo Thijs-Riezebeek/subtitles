@@ -1,7 +1,6 @@
 <?php
 
 use Thijs\PhpSrt\SrtFile;
-use Thijs\PhpSrt\SrtScanner;
 use Thijs\PhpSrt\Subtitle;
 
 class SrtFileTest extends PHPUnit_Framework_TestCase

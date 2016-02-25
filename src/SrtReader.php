@@ -1,6 +1,6 @@
 <?php namespace Thijs\PhpSrt;
 
-class SrtScanner
+class SrtReader
 {
     /**
      * @param string $file_path
