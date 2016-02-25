@@ -2,98 +2,76 @@
 
 class SrtScanner
 {
-    const SRT_STATE_SUB_NUMBER = 0;
-    const SRT_STATE_TIME       = 1;
-    const SRT_STATE_TEXT       = 2;
-    const SRT_STATE_BLANK      = 3;
-
-    /**
-     * @var int
-     */
-    private $current_state = self::SRT_STATE_SUB_NUMBER;
-
-    private $current_text = "";
-    private $current_time = "";
-    private $current_num = 0;
-
     /**
      * @param string $file_path
      * @return SrtFile
      */
-    public function readFile ($file_path)
+    public static function readFile ($file_path)
     {
-        return self::readLines(self::getFileLines($file_path));
+        return self::scanFileContents(self::getFileContents($file_path));
     }
 
     /**
      * @param string $file_path
      * @return array
      */
-    protected function getFileLines ($file_path)
+    protected static function getFileContents ($file_path)
     {
-        return file($file_path);
+        return file_get_contents($file_path);
     }
 
     /**
-     * @param array $lines
+     * @param string $file_contents
      * @return SrtFile
      */
-    public function readLines (array $lines)
+    protected static function scanFileContents ($file_contents)
+    {
+        $blocks = explode("\n\n", $file_contents);
+
+        return self::scanBlocks($blocks);
+    }
+
+    /**
+     * @param array $blocks
+     * @return SrtFile
+     */
+    protected static function scanBlocks(array $blocks)
     {
         $srt_file = new SrtFile();
-        var_dump($lines);
-        foreach ($lines as $line)
+        foreach ($blocks as $block)
         {
-            $this->readLine($srt_file, $line);
+            if (trim($block) === "")
+            {
+                continue;
+            }
+
+            $srt_file->addSubtitle(self::createSubtitleFromBlock($block));
         }
 
         return $srt_file;
     }
 
     /**
-     * @param SrtFile $srt_file
-     * @param string $line
+     * @param string $block
+     * @return Subtitle
      */
-    public function readLine(SrtFile $srt_file, $line)
+    protected static function createSubtitleFromBlock($block)
     {
-        switch($this->current_state) {
-            case self::SRT_STATE_SUB_NUMBER:
-                $this->current_num = trim($line);
-                $this->current_state = self::SRT_STATE_TIME;
-                break;
+        $matches = self::matchBlockToRegex($block);
 
-            case self::SRT_STATE_TIME:
-                $this->current_time = trim($line);
-                $this->current_state = self::SRT_STATE_TEXT;
+        $subtitle = new Subtitle();
+        $subtitle->number = trim($matches[1]);
+        $subtitle->start_time = Time::fromString($matches[2]);
+        $subtitle->stop_time = Time::fromString($matches[3]);
+        $subtitle->text = trim($matches[4]);
 
-                break;
-
-            case self::SRT_STATE_TEXT:
-                var_dump($line);
-                if (trim($line) == "") {
-                    $subtitle = new Subtitle();
-                    $subtitle->number = $this->current_num;
-                    $subtitle->text = $this->current_text;
-
-                    list($subtitle->start_time, $subtitle->stop_time) = \explode(" --> ", $this->current_time);
-
-                    $srt_file->addSubtitle($subtitle);
-                    $this->clearState();
-                }
-                else
-                {
-                    $this->current_text .= $line;
-                }
-
-                break;
-        }
+        return $subtitle;
     }
 
-    private function clearState ()
+    protected static function matchBlockToRegex ($block)
     {
-        $this->current_state = self::SRT_STATE_SUB_NUMBER;
-        $this->current_text = "";
-        $this->current_time = "";
-        $this->current_num = 0;
+        preg_match("/(\d*)\r?\n(\d\d:\d\d:\d\d,\d\d\d) --> (\d\d:\d\d:\d\d,\d\d\d)\r?\n(.*)/s", $block, $matches);
+
+        return $matches;
     }
 }
