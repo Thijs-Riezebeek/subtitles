@@ -62,4 +62,10 @@ class Subtitle
     {
         return $this->stop_time->toString();
     }
+
+    public function toString ()
+    {
+        return sprintf("%d\n%s --> %s\n%s",
+            $this->number, $this->getFormattedStartTime(), $this->getFormattedStopTime(), $this->text);
+    }
 }
