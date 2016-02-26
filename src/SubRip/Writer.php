@@ -14,11 +14,24 @@ class Writer
     private static function createFileContents (File $srt_file)
     {
         $new_file = "";
-        foreach ($srt_file->getSubtitles() as $subtitle)
+        $subtitles = $srt_file->getSubtitles();
+        $subtitle_count = $srt_file->subtitleCount();
+
+        for ($i = 0; $i < $subtitle_count; $i += 1)
         {
-            $new_file .= $subtitle->toString() . "\n\n";
+            $new_file .= $subtitles[$i]->toString() . (self::isLastSubtitle($i, $subtitle_count) ? "\n" : "\n\n");
         }
 
         return $new_file;
+    }
+
+    /**
+     * @param int $i
+     * @param int $subtitle_count
+     * @return bool
+     */
+    private static function isLastSubtitle ($i, $subtitle_count)
+    {
+        return $i === $subtitle_count - 1;
     }
 }
