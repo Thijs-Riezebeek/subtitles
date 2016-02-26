@@ -1,10 +1,11 @@
-<?php namespace ThijsR\Subtitles;
+<?php namespace ThijsR\Subtitles\SubRip;
 
+use \ThijsR\Subtitles\Subtitle;
 
-class SrtFile
+class File
 {
     /**
-     * @var Subtitle[]
+     * @var \ThijsR\Subtitles\Subtitle[]
      */
     private $subtitles = [];
 

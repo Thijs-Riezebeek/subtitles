@@ -1,20 +1,20 @@
 <?php
 
-use ThijsR\Subtitles\SrtReader;
+use ThijsR\Subtitles\SubRip;
 
 class SrtReaderTest extends PHPUnit_Framework_TestCase
 {
     public function testReadFileReturnsEmptySrtFileWhenFileEmpty ()
     {
-        $srt_file = SrtReader::readFile(__DIR__ . "/../empty.srt");
+        $srt_file = SubRip\Reader::readFile(__DIR__ . "/../empty.srt");
 
-        $this->assertInstanceOf("ThijsR\\Subtitles\\SrtFile", $srt_file);
+        $this->assertInstanceOf("ThijsR\\Subtitles\\SubRip\\File", $srt_file);
         $this->assertEquals(0, $srt_file->subtitleCount());
     }
 
     public function testReadFileReturnsCorrectSrtFileWhenFileContainsOneSubtitle ()
     {
-        $srt_file = SrtReader::readFile(__DIR__ . "/../single.srt");
+        $srt_file = SubRip\Reader::readFile(__DIR__ . "/../single.srt");
 
         $this->assertEquals(1, $srt_file->subtitleCount());
 
@@ -26,7 +26,7 @@ class SrtReaderTest extends PHPUnit_Framework_TestCase
 
     public function testReadFileReturnsCorrectSrtFileWhenFileContains50Subtitles ()
     {
-        $srt_file = SrtReader::readFile(__DIR__ . "/../multiple.srt");
+        $srt_file = SubRip\Reader::readFile(__DIR__ . "/../multiple.srt");
 
         $this->assertEquals(50, $srt_file->subtitleCount());
 

@@ -1,10 +1,13 @@
-<?php namespace ThijsR\Subtitles;
+<?php namespace ThijsR\Subtitles\SubRip;
 
-class SrtReader
+use \ThijsR\Subtitles\Subtitle;
+use \ThijsR\Subtitles\Time;
+
+class Reader
 {
     /**
      * @param string $file_path
-     * @return SrtFile
+     * @return File
      */
     public static function readFile ($file_path)
     {
@@ -22,7 +25,7 @@ class SrtReader
 
     /**
      * @param string $file_contents
-     * @return SrtFile
+     * @return File
      */
     protected static function scanFileContents ($file_contents)
     {
@@ -33,11 +36,11 @@ class SrtReader
 
     /**
      * @param array $blocks
-     * @return SrtFile
+     * @return File
      */
     protected static function scanBlocks(array $blocks)
     {
-        $srt_file = new SrtFile();
+        $srt_file = new File();
         foreach ($blocks as $block)
         {
             if (trim($block) === "")

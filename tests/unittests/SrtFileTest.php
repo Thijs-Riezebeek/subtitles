@@ -1,13 +1,13 @@
 <?php
 
-use ThijsR\Subtitles\SrtFile;
+use ThijsR\Subtitles\SubRip;
 use ThijsR\Subtitles\Subtitle;
 
 class SrtFileTest extends PHPUnit_Framework_TestCase
 {
     private function setUpSrtFileWithSingleSubtitle($number, $start_time, $end_time, $text = NULL)
     {
-        $srt_file = new SrtFile();
+        $srt_file = new SubRip\File();
         $subtitle = new Subtitle($number, $start_time, $end_time, $text);
         $srt_file->addSubtitle($subtitle);
 
