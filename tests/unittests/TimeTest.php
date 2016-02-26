@@ -1,17 +1,17 @@
 <?php
 
-use ThijsR\Subtitles\Time;
+use ThijsR\Subtitles\SubRip;
 
 class TimeTest extends PHPUnit_Framework_TestCase
 {
     public function testFromStringCreatesCorrectTimeObject ()
     {
-        $this->assertEquals("02:15:48,429", Time::fromString("02:15:48,429")->toString());
+        $this->assertEquals("02:15:48,429", SubRip\Time::fromString("02:15:48,429")->toString());
     }
 
     public function testAddZeroDoesNotAlterTime ()
     {
-        $time = Time::fromString("02:15:48,429");
+        $time = SubRip\Time::fromString("02:15:48,429");
 
         $time->addMilliseconds(0);
         $time->addSeconds(0);
@@ -22,7 +22,7 @@ class TimeTest extends PHPUnit_Framework_TestCase
 
     public function testAddOneWorksCorrectly ()
     {
-        $time = Time::fromString("02:15:48,429");
+        $time = SubRip\Time::fromString("02:15:48,429");
 
         $time->addMilliseconds(1);
         $time->addSeconds(1);
@@ -33,7 +33,7 @@ class TimeTest extends PHPUnit_Framework_TestCase
 
     public function testAddWorksForPositiveNumbersWithOverflow ()
     {
-        $time = Time::fromString("02:15:48,429");
+        $time = SubRip\Time::fromString("02:15:48,429");
 
         $time->addMilliseconds(600);
         $time->addSeconds(11);
@@ -43,7 +43,7 @@ class TimeTest extends PHPUnit_Framework_TestCase
 
     public function testAddWorksWithNegativeNumbers ()
     {
-        $time = Time::fromString("02:15:48,429");
+        $time = SubRip\Time::fromString("02:15:48,429");
 
         $time->addMilliseconds(-1);
         $time->addSeconds(-1);
@@ -54,7 +54,7 @@ class TimeTest extends PHPUnit_Framework_TestCase
 
     public function testAddWorksWithNegativeNumbersWithUnderflow ()
     {
-        $time = Time::fromString("02:15:48,429");
+        $time = SubRip\Time::fromString("02:15:48,429");
 
         $time->addMilliseconds(-500);
         $time->addSeconds(-48);

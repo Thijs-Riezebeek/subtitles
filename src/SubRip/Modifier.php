@@ -1,6 +1,5 @@
 <?php namespace ThijsR\Subtitles\SubRip;
 
-
 class Modifier
 {
     /**

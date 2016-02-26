@@ -1,8 +1,5 @@
 <?php namespace ThijsR\Subtitles\SubRip;
 
-use \ThijsR\Subtitles\Subtitle;
-use \ThijsR\Subtitles\Time;
-
 class Reader
 {
     /**

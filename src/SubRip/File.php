@@ -1,11 +1,9 @@
 <?php namespace ThijsR\Subtitles\SubRip;
 
-use \ThijsR\Subtitles\Subtitle;
-
 class File
 {
     /**
-     * @var \ThijsR\Subtitles\Subtitle[]
+     * @var Subtitle[]
      */
     private $subtitles = [];
 

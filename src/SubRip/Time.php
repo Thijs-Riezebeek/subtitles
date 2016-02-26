@@ -1,4 +1,4 @@
-<?php namespace ThijsR\Subtitles;
+<?php namespace ThijsR\Subtitles\SubRip;
 
 class Time
 {
@@ -61,7 +61,8 @@ class Time
      */
     public function toString ()
     {
-        return sprintf("%02d:%02d:%02d,%03d", $this->hours, $this->minutes, $this->seconds, $this->milliseconds);
+        return sprintf("%02d:%02d:%02d,%03d",
+            $this->hours, $this->minutes, $this->seconds, $this->milliseconds);
     }
 
     /**
@@ -90,7 +91,7 @@ class Time
         }
         else
         {
-            $overflow_amount = (int)($new_amount / $max);
+            $overflow_amount = (int) ($new_amount / $max);
         }
         $remaining_amount = $new_amount - $overflow_amount * $max;
 

@@ -1,4 +1,4 @@
-<?php namespace ThijsR\Subtitles;
+<?php namespace ThijsR\Subtitles\SubRip;
 
 class Subtitle
 {
@@ -22,6 +22,13 @@ class Subtitle
      */
     public $stop_time;
 
+    /**
+     * Subtitle constructor.
+     * @param int|null    $number
+     * @param string|null $start_Time
+     * @param string|null $stop_time
+     * @param string|null $text
+     */
     public function __construct($number = NULL, $start_Time = NULL, $stop_time = NULL, $text = NULL)
     {
         $this->number = $number;
@@ -63,6 +70,9 @@ class Subtitle
         return $this->stop_time->toString();
     }
 
+    /**
+     * @return string
+     */
     public function toString ()
     {
         return sprintf("%d\n%s --> %s\n%s",

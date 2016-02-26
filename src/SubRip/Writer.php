@@ -3,7 +3,10 @@
 
 class Writer
 {
-
+    /**
+     * @param File   $srt_file
+     * @param string $destination
+     */
     public static function writeFile (File $srt_file, $destination)
     {
         $file_contents = self::createFileContents($srt_file);
@@ -11,6 +14,10 @@ class Writer
         file_put_contents($destination, $file_contents);
     }
 
+    /**
+     * @param File $srt_file
+     * @return string
+     */
     private static function createFileContents (File $srt_file)
     {
         $new_file = "";
