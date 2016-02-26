@@ -40,4 +40,13 @@ class SrtReaderTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("00:07:25,721", $srt_file->getSubtitles()[49]->getFormattedStopTime());
         $this->assertEquals("You're getting the very best\nof care, okay?", $srt_file->getSubtitles()[49]->text);
     }
+
+    public function testReadFileReturnsCorrectFileWhenFileHasNoTrailingNewline ()
+    {
+        $srt_file = SubRip\Reader::readFile(__DIR__ . "/../no-trailing-newline.srt");
+
+        $this->assertEquals(5, $srt_file->subtitleCount());
+
+        $this->assertEquals("has visited Gaffney.", $srt_file->getSubtitles()[4]->text);
+    }
 }

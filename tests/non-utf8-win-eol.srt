@@ -1,0 +1,38 @@
+1
+00:00:00,340 --> 00:00:03,860
+<i>Az el�z� r�szek tartalm�b�l...</i>
+
+2
+00:00:03,890 --> 00:00:06,980
+Daryl fogja elcsalni �ket.
+20 m�rf�lddel arr�bb.
+
+3
+00:00:07,010 --> 00:00:10,150
+Kocsiba �l�k, �s mellette megyek majd.
+Nem mehet egyed�l.
+
+4
+00:00:10,300 --> 00:00:13,080
+- Az�rt csin�lod, mert meg akarsz halni?
+- Nem.
+
+5
+00:00:13,420 --> 00:00:18,320
+- T�bb� nem kell toboroznunk.
+Te m�sk�nt gondolod? - Igen.
+
+6
+00:00:18,580 --> 00:00:20,810
+<i>- Mi folyik ott?</i>
+- A h�tulja leszakadt!
+
+7
+00:00:20,840 --> 00:00:23,560
+<i>Alexandria fel� mennek!
+Ti menjetek tov�bb!</i>
+
+8
+00:00:23,590 --> 00:00:25,710
+- Mi az?
+- Menj tov�bb, majd j�v�k.
