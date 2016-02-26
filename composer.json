@@ -1,11 +1,21 @@
 {
-  "name": "thijs/php-srt",
+  "name": "thijsr/subtitles",
+  "version": "1.0.0",
+  "description": "Modification and conversion of subtitle file formats",
+  "keywords": ["srt", "subtitles"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name":     "Thijs Riezebeek",
+      "email":    "TRiezebeek@gmail.com"
+    }
+  ],
   "require-dev": {
     "phpunit/phpunit": "^5.0"
   },
   "autoload": {
     "psr-4": {
-      "Thijs\\PhpSrt\\": "src/"
+      "ThijsR\\Subtitles\\": "src/"
     }
   }
 }

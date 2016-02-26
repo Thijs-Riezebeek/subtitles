@@ -1,4 +1,4 @@
-<?php namespace Thijs\PhpSrt;
+<?php namespace ThijsR\Subtitles;
 
 class Time
 {

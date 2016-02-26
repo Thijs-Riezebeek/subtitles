@@ -1,6 +1,6 @@
 <?php
 
-use Thijs\PhpSrt\Time;
+use ThijsR\Subtitles\Time;
 
 class TimeTest extends PHPUnit_Framework_TestCase
 {

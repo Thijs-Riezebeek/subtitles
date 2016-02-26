@@ -1,6 +1,6 @@
 <?php
 
-use Thijs\PhpSrt\SrtReader;
+use ThijsR\Subtitles\SrtReader;
 
 class SrtReaderTest extends PHPUnit_Framework_TestCase
 {
@@ -8,7 +8,7 @@ class SrtReaderTest extends PHPUnit_Framework_TestCase
     {
         $srt_file = SrtReader::readFile(__DIR__ . "/../empty.srt");
 
-        $this->assertInstanceOf("Thijs\\PhpSrt\\SrtFile", $srt_file);
+        $this->assertInstanceOf("ThijsR\\Subtitles\\SrtFile", $srt_file);
         $this->assertEquals(0, $srt_file->subtitleCount());
     }
 

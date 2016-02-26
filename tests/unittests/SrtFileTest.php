@@ -1,7 +1,7 @@
 <?php
 
-use Thijs\PhpSrt\SrtFile;
-use Thijs\PhpSrt\Subtitle;
+use ThijsR\Subtitles\SrtFile;
+use ThijsR\Subtitles\Subtitle;
 
 class SrtFileTest extends PHPUnit_Framework_TestCase
 {
