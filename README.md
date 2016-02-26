@@ -1,5 +1,5 @@
-ThijsR\Subtitles
-================
+Subtitle File Modification
+==========================
 
 This package contains the functionality to modify subtitle files. It is currently in a beta state and therefore names as wel as APIs can and probably will change.
 
