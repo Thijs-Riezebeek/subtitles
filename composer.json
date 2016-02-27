@@ -1,6 +1,7 @@
 {
   "name": "thijsr/subtitles",
-  "version": "0.5.0",
+  "type": "library",
+  "version": "1.0.0",
   "description": "Modification and conversion of subtitle file formats",
   "keywords": ["srt", "subtitles"],
   "license": "MIT",
@@ -10,6 +11,9 @@
       "email":    "TRiezebeek@gmail.com"
     }
   ],
+  "require": {
+    "php": ">=5.4.0"
+  },  
   "require-dev": {
     "phpunit/phpunit": "^5.0"
   },
