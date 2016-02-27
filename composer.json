@@ -1,14 +1,15 @@
 {
   "name": "thijsr/subtitles",
   "type": "library",
-  "version": "1.0.0-beta",
+  "version": "v1.0.0-beta",
   "description": "Modification and conversion of subtitle file formats",
   "keywords": ["srt", "subtitles"],
   "license": "MIT",
   "authors": [
     {
-      "name":     "Thijs Riezebeek",
-      "email":    "TRiezebeek@gmail.com"
+      "name": "Thijs Riezebeek",
+      "email": "TRiezebeek@gmail.com",
+      "role": "developer"
     }
   ],
   "require": {
