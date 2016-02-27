@@ -12,10 +12,10 @@ class SrtReaderWriterIntegrationTest extends PHPUnit_Framework_TestCase
      */
     public function testWriterCreatesExactSameFileAsReadForCorrectlyFormattedSrtFiles ($file_location)
     {
-        $file = SubRip\Reader::readFile($file_location);
+        $srt_file = SubRip\Reader::readFile($file_location);
 
         ob_start();
-        SubRip\Writer::writeFile($file, "php://output");
+        SubRip\Writer::writeFile($srt_file, "php://output");
         $new_file = ob_get_contents();
         ob_end_clean();
 

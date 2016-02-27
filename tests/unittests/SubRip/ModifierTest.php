@@ -2,7 +2,7 @@
 
 use ThijsR\Subtitles\SubRip;
 
-class SrtModifierTest extends PHPUnit_Framework_TestCase
+class ModifierTest extends PHPUnit_Framework_TestCase
 {
     private function setUpSrtFileWithSingleSubtitle ($number, $start_time, $end_time, $text = NULL)
     {
@@ -45,5 +45,40 @@ class SrtModifierTest extends PHPUnit_Framework_TestCase
         SubRip\Modifier::addDelayInMs($srt_file, -1);
         $this->assertEquals("00:07:21,898", $srt_file->getSubtitles()[0]->getFormattedStartTime());
         $this->assertEquals("00:07:24,442", $srt_file->getSubtitles()[0]->getFormattedStopTime());
+    }
+
+    public function testAddDelayInMSWorksOnAllSubtitlesInFile ()
+    {
+        $srt_file = SubRip\Reader::readFile(__DIR__ . "/../../full.srt");
+        $deep_copy = new \DeepCopy\DeepCopy();
+
+        $subtitles = [];
+        foreach ($srt_file->getSubtitles() as $subtitle)
+        {
+            $subtitles[] = $deep_copy->copy($subtitle);
+        }
+
+        $delay = 12345678;
+        SubRip\Modifier::addDelayInMs($srt_file, $delay);
+
+        $this->assertSubtitlesHaveBeenDelayed($subtitles, $srt_file->getSubtitles(), $delay);
+    }
+
+    /**
+     * @param SubRip\Subtitle[] $subtitles
+     * @param SubRip\Subtitle[] $delayed_subtitles
+     * @param int $delay_in_ms
+     */
+    private function assertSubtitlesHaveBeenDelayed (array $subtitles, array $delayed_subtitles, $delay_in_ms)
+    {
+        $subtitle_count = count($subtitles);
+        $this->assertSameSize($subtitles, $delayed_subtitles);
+
+        for ($i = 0; $i < $subtitle_count; $i += 1)
+        {
+            $subtitles[$i]->addDelayInMilliseconds($delay_in_ms);
+
+            $this->assertEquals($delayed_subtitles[$i]->toString(), $subtitles[$i]->toString());
+        }
     }
 }
