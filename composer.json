@@ -1,9 +1,9 @@
 {
   "name": "thijsr/subtitles",
   "type": "library",
-  "version": "v1.0.0-beta",
+  "version": "v1.0.1-beta",
   "description": "Modification and conversion of subtitle file formats",
-  "keywords": ["srt", "subtitles"],
+  "keywords": ["srt", "subrip","subtitles"],
   "license": "MIT",
   "authors": [
     {
