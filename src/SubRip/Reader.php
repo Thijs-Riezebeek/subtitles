@@ -26,18 +26,77 @@ class Reader
      */
     protected static function scanFileContents ($file_contents)
     {
-        $blocks = explode("\n\n", $file_contents);
+        $srt_file = new File();
 
-        return self::scanBlocks($blocks);
+        try
+        {
+            $srt_file->setLineEnding(self::getFileLineEnding($file_contents));
+        }
+        catch (NoLineEndingsFoundException $e)
+        {
+            // Probably a file with no subtitles at all (empty)
+            return $srt_file;
+        }
+
+        $block_separator = $srt_file->getLineEnding() . $srt_file->getLineEnding();
+        $blocks = explode($block_separator, $file_contents);
+        self::scanBlocksIntoFile($srt_file, $blocks);
+
+        return $srt_file;
     }
 
     /**
-     * @param array $blocks
-     * @return File
+     * @param string $file_contents
+     * @return string
+     * @throws NoLineEndingsFoundException
      */
-    protected static function scanBlocks(array $blocks)
+    private static function getFileLineEnding($file_contents)
     {
-        $srt_file = new File();
+        // Search for double newlines that break up the blocks
+        if (preg_match("/(\r\n\r\n)/s", $file_contents))
+        {
+            return "\r\n";
+        }
+        if (preg_match("/(\n\r\n\r)/s", $file_contents))
+        {
+            return "\n\r";
+        }
+        if (preg_match("/(\n\n)/s", $file_contents))
+        {
+            return "\n";
+        }
+        if (preg_match("/(\r\r)/s", $file_contents))
+        {
+            return "\r";
+        }
+
+        // No double newlines so far, meaning a file with one subtitle
+        if (preg_match("/(\r\n)/s", $file_contents))
+        {
+            return "\r\n";
+        }
+        if (preg_match("/(\n\r)/s", $file_contents))
+        {
+            return "\n\r";
+        }
+        if (preg_match("/(\n)/s", $file_contents))
+        {
+            return "\n";
+        }
+        if (preg_match("/(\r)/s", $file_contents))
+        {
+            return "\r";
+        }
+
+        throw new NoLineEndingsFoundException("");
+    }
+
+    /**
+     * @param File $srt_file
+     * @param array $blocks
+     */
+    protected static function scanBlocksIntoFile(File $srt_file, array $blocks)
+    {
         foreach ($blocks as $block)
         {
             if (trim($block) === "")
@@ -47,8 +106,6 @@ class Reader
 
             $srt_file->addSubtitle(self::createSubtitleFromBlock($block));
         }
-
-        return $srt_file;
     }
 
     /**
@@ -68,9 +125,13 @@ class Reader
         return $subtitle;
     }
 
+    /**
+     * @param string $block
+     * @return mixed
+     */
     protected static function matchBlockToRegex ($block)
     {
-        preg_match("/(\d*)\r?\n(\d\d:\d\d:\d\d,\d\d\d) --> (\d\d:\d\d:\d\d,\d\d\d)\r?\n(.*)/s", $block, $matches);
+        preg_match('/(\d*)(?:\r\n|\n\r|\n|\r)(\d{1,3}:\d{1,2}:\d{1,2},\d{1,3}) --> (\d{1,3}:\d{1,2}:\d{1,2},\d{1,3})(?:\r\n|\n\r|\n|\r)(.*)/s', $block, $matches);
 
         return $matches;
     }

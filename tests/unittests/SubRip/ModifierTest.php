@@ -47,9 +47,16 @@ class ModifierTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("00:07:24,442", $srt_file->getSubtitles()[0]->getFormattedStopTime());
     }
 
-    public function testAddDelayInMSWorksOnAllSubtitlesInFile ()
+    /**
+     * @dataProvider dpReadableFilesAndSubtitleCount
+     *
+     * @param string $file_location
+     * @param int    $expected_subtitle_count
+     */
+    public function testAddDelayInMSWorksOnAllSubtitlesInFile ($file_location, $expected_subtitle_count)
     {
-        $srt_file = SubRip\Reader::readFile(__DIR__ . "/../../full.srt");
+        $srt_file = SubRip\Reader::readFile($file_location);
+        $this->assertSame($expected_subtitle_count, $srt_file->subtitleCount());
         $deep_copy = new \DeepCopy\DeepCopy();
 
         $subtitles = [];
@@ -78,7 +85,16 @@ class ModifierTest extends PHPUnit_Framework_TestCase
         {
             $subtitles[$i]->addDelayInMilliseconds($delay_in_ms);
 
-            $this->assertEquals($delayed_subtitles[$i]->toString(), $subtitles[$i]->toString());
+            $this->assertEquals($delayed_subtitles[$i]->start_time->toString(), $subtitles[$i]->start_time->toString());
+            $this->assertEquals($delayed_subtitles[$i]->stop_time->toString(), $subtitles[$i]->stop_time->toString());
         }
+    }
+
+    public function dpReadableFilesAndSubtitleCount ()
+    {
+        return [
+            [__DIR__ . "/../../bad_format_hoc_s02e02_full.srt", 643],
+            [__DIR__ . "/../../full.srt", 746],
+        ];
     }
 }
