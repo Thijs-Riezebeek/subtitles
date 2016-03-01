@@ -6,17 +6,17 @@ This package contains the functionality to modify subtitle files. It is currentl
 Installation
 ------------
 
-The package can be installed using the `composer require` command or by adding it to your `composer.json` manually.
+The package can be installed using the following command:
 
 ```bash
 composer require thijsr/subtitles
 ```
 
+OR by adding it to your `composer.json` manually:
+
 ```json
-{
-  "require": {
-    "thijsr/subtitles": ">=1.0.0-beta
-  }
+"require": {
+  "thijsr/subtitles": ">=1.0.0-beta
 }
 ```
 
