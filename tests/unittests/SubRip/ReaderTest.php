@@ -1,12 +1,13 @@
 <?php
 
 use ThijsR\Subtitles\SubRip;
+use ThijsR\Subtitles\Test\BaseTestCase;
 
-class ReaderTest extends PHPUnit_Framework_TestCase
+class ReaderTest extends BaseTestCase
 {
     public function testReadFileReturnsEmptySrtFileWhenFileEmpty ()
     {
-        $srt_file = SubRip\Reader::readFile(__DIR__ . "/../../empty.srt");
+        $srt_file = SubRip\Reader::readFile($this->getSubRipFileLocation("empty.srt"));
 
         $this->assertInstanceOf("ThijsR\\Subtitles\\SubRip\\File", $srt_file);
         $this->assertEquals(0, $srt_file->subtitleCount());
@@ -14,7 +15,7 @@ class ReaderTest extends PHPUnit_Framework_TestCase
 
     public function testReadFileReturnsCorrectSrtFileWhenFileContainsOneSubtitle ()
     {
-        $srt_file = SubRip\Reader::readFile(__DIR__ . "/../../single.srt");
+        $srt_file = SubRip\Reader::readFile($this->getSubRipFileLocation("single.srt"));
 
         $this->assertEquals(1, $srt_file->subtitleCount());
 
@@ -26,7 +27,7 @@ class ReaderTest extends PHPUnit_Framework_TestCase
 
     public function testReadFileReturnsCorrectSrtFileWhenFileContains50Subtitles ()
     {
-        $srt_file = SubRip\Reader::readFile(__DIR__ . "/../../multiple.srt");
+        $srt_file = SubRip\Reader::readFile($this->getSubRipFileLocation("multiple.srt"));
 
         $this->assertEquals(50, $srt_file->subtitleCount());
 
@@ -43,7 +44,7 @@ class ReaderTest extends PHPUnit_Framework_TestCase
 
     public function testReadFileReturnsCorrectFileWhenFileHasNoTrailingNewline ()
     {
-        $srt_file = SubRip\Reader::readFile(__DIR__ . "/../../no-trailing-newline.srt");
+        $srt_file = SubRip\Reader::readFile($this->getSubRipFileLocation("no-trailing-newline.srt"));
 
         $this->assertEquals(5, $srt_file->subtitleCount());
 

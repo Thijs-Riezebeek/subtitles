@@ -1,8 +1,9 @@
 <?php
 
 use ThijsR\Subtitles\SubRip;
+use ThijsR\Subtitles\Test\BaseTestCase;
 
-class TimeTest extends PHPUnit_Framework_TestCase
+class TimeTest extends BaseTestCase
 {
     public function testFromStringCreatesCorrectTimeObject ()
     {

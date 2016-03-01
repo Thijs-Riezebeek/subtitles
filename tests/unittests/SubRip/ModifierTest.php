@@ -1,8 +1,9 @@
 <?php
 
 use ThijsR\Subtitles\SubRip;
+use ThijsR\Subtitles\Test\BaseTestCase;
 
-class ModifierTest extends PHPUnit_Framework_TestCase
+class ModifierTest extends BaseTestCase
 {
     private function setUpSrtFileWithSingleSubtitle ($number, $start_time, $end_time, $text = NULL)
     {
@@ -50,12 +51,12 @@ class ModifierTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider dpReadableFilesAndSubtitleCount
      *
-     * @param string $file_location
+     * @param string $filename
      * @param int    $expected_subtitle_count
      */
-    public function testAddDelayInMSWorksOnAllSubtitlesInFile ($file_location, $expected_subtitle_count)
+    public function testAddDelayInMSWorksOnAllSubtitlesInFile ($filename, $expected_subtitle_count)
     {
-        $srt_file = SubRip\Reader::readFile($file_location);
+        $srt_file = SubRip\Reader::readFile($this->getSubRipFileLocation($filename));
         $this->assertSame($expected_subtitle_count, $srt_file->subtitleCount());
         $deep_copy = new \DeepCopy\DeepCopy();
 
@@ -93,8 +94,8 @@ class ModifierTest extends PHPUnit_Framework_TestCase
     public function dpReadableFilesAndSubtitleCount ()
     {
         return [
-            [__DIR__ . "/../../bad_format_hoc_s02e02_full.srt", 643],
-            [__DIR__ . "/../../full.srt", 746],
+            ["bad_format_hoc_s02e02_full.srt", 643],
+            ["full.srt", 746],
         ];
     }
 }

@@ -2,16 +2,18 @@
 
 use ThijsR\Subtitles\SubRip;
 use ThijsR\Subtitles\Subtitle;
+use ThijsR\Subtitles\Test\BaseTestCase;
 
-class SrtReaderWriterIntegrationTest extends PHPUnit_Framework_TestCase
+class SrtReaderWriterIntegrationTest extends BaseTestCase
 {
     /**
-     * @param string $file_location
+     * @param string $filename
      *
      * @dataProvider dpCorrectSrtFiles
      */
-    public function testWriterOutputMatchesReaderInputForCorrectFiles ($file_location)
+    public function testWriterOutputMatchesReaderInputForCorrectFiles ($filename)
     {
+        $file_location = $this->getSubRipFileLocation($filename);
         $file_contents = file_get_contents($file_location);
         $srt_file = SubRip\Reader::readFile($file_location);
 
@@ -27,10 +29,10 @@ class SrtReaderWriterIntegrationTest extends PHPUnit_Framework_TestCase
     public function dpCorrectSrtFiles ()
     {
         return [
-            [__DIR__ . "/../../full.srt"],
-            [__DIR__ . "/../../empty.srt"],
-            [__DIR__ . "/../../single.srt"],
-            [__DIR__ . "/../../non-utf8-win-eol.srt"],
+            ["full.srt"],
+            ["empty.srt"],
+            ["single.srt"],
+            ["non-utf8-win-eol.srt"],
         ];
     }
 }
