@@ -12,7 +12,7 @@ The package can be installed using the following command:
 composer require thijsr/subtitles
 ```
 
-OR by adding it to your `composer.json` manually:
+Or by adding it to your `composer.json` manually:
 
 ```json
 "require": {
