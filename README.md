@@ -3,6 +3,23 @@ Subtitle File Modification
 
 This package contains the functionality to modify subtitle files. It is currently in a beta state and therefore names as wel as APIs can and probably will change.
 
+Installation
+------------
+
+The package can be installed using the `composer require` command or by adding it to your `composer.json` manually.
+
+```bash
+composer require thijsr/subtitles
+```
+
+```json
+{
+  "require": {
+    "thijsr/subtitles": ">=1.0.0-beta
+  }
+}
+```
+
 Examples
 --------
 
