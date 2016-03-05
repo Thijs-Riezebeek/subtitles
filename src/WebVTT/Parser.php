@@ -59,7 +59,7 @@ class Parser
 
         $result = $this->collectCharSequenceTillLineFeed($input);
 
-        if ($this->isPositionPastInputEnd($input))
+        if ($this->isPositionPastInputEnd($input, $this->position))
         {
             return new File();
         }
@@ -82,7 +82,7 @@ class Parser
      */
     protected function collectCharSequenceTillLineFeed ($input)
     {
-        return $this->collectCharacterSequence($input, ['\u{000A}']);
+        return $this->collectCharacterSequenceExcluding($input, ['\u{000A}']);
     }
 
     /**
@@ -90,15 +90,24 @@ class Parser
      * @param array $stop_characters
      * @return string
      */
-    protected function collectCharacterSequence($input, array $stop_characters)
+    protected function collectCharacterSequenceExcluding($input, array $stop_characters)
     {
         $result = "";
 
-        while (!$this->isPositionPastInputEnd($input) && !in_array($input[$this->position], $stop_characters))
+        while (!$this->isPositionPastInputEnd($input, $this->position) && !in_array($input[$this->position], $stop_characters))
         {
             $result .= $input[$this->position];
             $this->position++;
         }
+
+        return $result;
+    }
+
+    protected function collectCharacterSequenceIncluding($input, array $allowed_characters)
+    {
+        $result = "";
+
+        while (!$this->isPositionPastInputEnd($input, ))
 
         return $result;
     }
@@ -120,7 +129,7 @@ class Parser
             $line = $this->collectCharSequenceTillLineFeed($input);
             $line_count++;
 
-            if ($this->isPositionPastInputEnd($input))
+            if ($this->isPositionPastInputEnd($input, $this->position))
             {
                 $seen_eof = TRUE;
             }
@@ -135,17 +144,52 @@ class Parser
                 {
                     $seen_arrow = TRUE;
                     $previous_position = $this->position;
+
+                    $cue = new Cue();
+                    $this->collectWebVTTCueTimingsAndSettings($line);
+
                 }
             }
         }
+    }
+
+    protected function collectWebVTTCueTimingsAndSettings ($input)
+    {
+        $cue = new Cue();
+        $position = $this->skipWhitespace($input, 0);
+
+        $this->collectWebVTTTimeStamp($input, $position);
+    }
+
+    protected function collectWebVTTTimeStamp($input, $position)
+    {
+        $most_significant_unit = "mins";
+
+        if ($this->isPositionPastInputEnd($input, $position) || !$this->isAsciiDigit($input[$position]))
+        {
+            // return failure abort
+        }
+
+        $this->collectCharacterSequenceExcluding()
+    }
+
+    protected function isAsciiDigit ($character)
+    {
+        return ctype_digit($character);
+    }
+
+    protected function skipWhitespace ($input, $position)
+    {
+        while ($input[$position] == " ") $position++;
+        return $position;
     }
 
     /**
      * @param string $input
      * @return bool
      */
-    protected function isPositionPastInputEnd($input)
+    protected function isPositionPastInputEnd($input, $position)
     {
-        return $this->position >= strlen($input);
+        return $position >= strlen($input);
     }
 }
