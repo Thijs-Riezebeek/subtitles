@@ -98,4 +98,24 @@ class ModifierTest extends BaseTestCase
             ["full.srt", 746],
         ];
     }
+
+    public function testRestoreNumbering ()
+    {
+        $srt_file = new SubRip\File();
+
+        $srt_file->addSubtitle(new SubRip\Subtitle(1, "10:10:10,000", "10:10:10,100", "a"));
+        $srt_file->addSubtitle(new SubRip\Subtitle(34, "10:10:10,100", "10:10:10,200", "b"));
+        $srt_file->addSubtitle(new SubRip\Subtitle(999, "10:10:10,200", "10:10:10,300", "c"));
+
+        $srt_file_string = SubRip\Writer::writeFileToString($srt_file);
+
+        $this->assertEquals("1\r\n10:10:10,000 --> 10:10:10,100\r\na\r\n\r\n34\r\n10:10:10,100 --> 10:10:10,200\r\nb" .
+            "\r\n\r\n999\r\n10:10:10,200 --> 10:10:10,300\r\nc\r\n", $srt_file_string);
+
+        SubRip\Modifier::restoreNumbering($srt_file);
+        $reordered_srt_file_string = SubRip\Writer::writeFileToString($srt_file);
+
+        $this->assertEquals("1\r\n10:10:10,000 --> 10:10:10,100\r\na\r\n\r\n2\r\n10:10:10,100 --> 10:10:10,200\r\nb" .
+            "\r\n\r\n3\r\n10:10:10,200 --> 10:10:10,300\r\nc\r\n", $reordered_srt_file_string);
+    }
 }
